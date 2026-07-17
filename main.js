@@ -1,41 +1,39 @@
 // main.js
 
-let stockDisponible = 20
+let inventario = ["Pan de Campo", "Bagels", "Pan de Lomo", "Tortuguitas", "Burger Buns"]
 
-// Función 1: procesa el pedido y devuelve si fue válido (con return)
-function procesarPedido(cantidad, stock) {
-  if (cantidad > stock) {
-    return false
-  }
-  return true
-}
-
-// Función 2: función flecha, calcula el nuevo stock
-const actualizarStock = (stockActual, cantidad) => stockActual - cantidad
-
-// Función 3: muestra el resultado
-function mostrarResultado(mensaje) {
-  console.log(mensaje)
-  alert(mensaje)
-}
-
-let vendiendo = true
-
-while (vendiendo === true) {
-  let cantidadPedida = prompt("¿Cuántas unidades querés pedir? (escribí 0 para salir)")
-  cantidadPedida = parseInt(cantidadPedida)
-
-  if (cantidadPedida === 0) {
-    vendiendo = false
-    mostrarResultado("Simulación finalizada. Stock final: " + stockDisponible)
-  } else {
-    const esValido = procesarPedido(cantidadPedida, stockDisponible)
-
-    if (esValido) {
-      stockDisponible = actualizarStock(stockDisponible, cantidadPedida)
-      mostrarResultado("Pedido confirmado. Stock restante: " + stockDisponible)
-    } else {
-      mostrarResultado("Stock insuficiente. Disponible: " + stockDisponible)
-    }
+// Función para recorrer y reportar el inventario (for...of)
+function mostrarInventario(lista) {
+  console.log("--- Inventario actual ---")
+  for (const producto of lista) {
+    console.log("Producto: " + producto)
   }
 }
+
+mostrarInventario(inventario)
+
+// Manipulación dinámica
+inventario.push("Focaccia")
+inventario.unshift("Pan Integral")
+
+const eliminado = inventario.pop()
+console.log("Se ha eliminado el elemento: " + eliminado)
+
+mostrarInventario(inventario)
+
+// Búsqueda y validación
+const buscado = prompt("¿Qué producto querés buscar?")
+
+if (inventario.includes(buscado)) {
+  const posicion = inventario.indexOf(buscado)
+  console.log("Encontrado en la posición: " + posicion)
+
+  // Actualización por índice con splice
+  const nuevoNombre = prompt("Escribí el nuevo nombre para reemplazarlo:")
+  inventario.splice(posicion, 1, nuevoNombre)
+  console.log(buscado + " fue reemplazado por " + nuevoNombre)
+} else {
+  console.log(buscado + " no está en el inventario")
+}
+
+mostrarInventario(inventario)
